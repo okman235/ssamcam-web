@@ -52,12 +52,12 @@
 <svg style="display:none">
   <symbol id="i-flip" viewBox="0 0 24 24"><path d="M12 4v16"/><path d="M9 8l-4 4 4 4"/><path d="M15 8l4 4-4 4"/></symbol>
   <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 9h13l-3-3"/><path d="M20 15H7l3 3"/></symbol>
-  <symbol id="i-zoom" viewBox="0 0 24 24"><path d="M4 9V4h5"/><path d="M20 9V4h-5"/><path d="M4 15v5h5"/><path d="M20 15v5h-5"/></symbol>
+  <symbol id="i-zoom" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l4.5 4.5"/><path d="M10.5 8v5M8 10.5h5"/></symbol>
   <symbol id="i-garo" viewBox="0 0 24 24"><rect x="3" y="6" width="8" height="12" rx="1"/><rect x="13" y="6" width="8" height="12" rx="1"/></symbol>
   <symbol id="i-sero" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="8" rx="1"/><rect x="6" y="13" width="12" height="8" rx="1"/></symbol>
   <symbol id="i-pip" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><rect x="12" y="12" width="7" height="5" rx="1" fill="currentColor" stroke="none"/></symbol>
   <symbol id="i-input" viewBox="0 0 24 24"><path d="M4 7h16"/><circle cx="9" cy="7" r="2.2" fill="#0F1614"/><path d="M4 17h16"/><circle cx="15" cy="17" r="2.2" fill="#0F1614"/></symbol>
-  <symbol id="i-fs" viewBox="0 0 24 24"><path d="M4 9V4h5"/><path d="M20 9V4h-5"/><path d="M4 15v5h5"/><path d="M20 15v5h-5"/></symbol>
+  <symbol id="i-cam" viewBox="0 0 24 24"><rect x="3" y="7" width="12" height="10" rx="2"/><path d="M15 10.5l5.5-3v9l-5.5-3z"/></symbol>
   <symbol id="i-full" viewBox="0 0 24 24"><path d="M8 3H3v5"/><path d="M16 3h5v5"/><path d="M8 21H3v-5"/><path d="M16 21h5v-5"/></symbol>
 </svg>
 
@@ -86,7 +86,7 @@
     <button class="rec" title="녹화"></button>
     <div style="text-align:center"><div class="meter r"></div><div class="mlbl">쌤</div></div>
     <div class="div"></div>
-    <button class="ico" title="쌤 카메라 와이드/줌"><svg><use href="#i-fs"/></svg></button>
+    <button class="ico" title="쌤 카메라 와이드/줌"><svg><use href="#i-cam"/></svg></button>
     <button class="ico on" title="세로"><svg><use href="#i-sero"/></svg></button>
     <button class="ico" title="가로"><svg><use href="#i-garo"/></svg></button>
     <button class="ico lock" title="PiP(앱 전용)"><svg><use href="#i-pip"/></svg></button>
@@ -99,7 +99,7 @@
   <div class="corner">‹</div>
   <div class="vid" style="left:0;top:0;width:50%;height:100%">학생 영상</div>
   <div class="vid" style="left:50%;top:0;width:50%;height:100%;background:#22333a">쌤 카메라</div>
-  <div class="strip" style="bottom:80px;left:12px;right:calc(50% + 12px)">
+  <div class="strip" style="bottom:112px;left:12px;right:calc(50% + 12px)">
     <svg class="wedge" viewBox="0 0 38 16"><polygon points="0,15 38,15 38,1" fill="rgba(255,255,255,.18)"/><clipPath id="cp2"><rect x="0" y="0" width="24" height="16"/></clipPath><polygon points="0,15 38,15 38,1" fill="var(--amber)" clip-path="url(#cp2)"/></svg>
     <div class="play">❚❚</div>
     <div class="seek"><div class="thumb"></div></div>
@@ -118,7 +118,7 @@
       <button class="rec"></button>
       <div style="text-align:center"><div class="meter r"></div><div class="mlbl">쌤</div></div>
       <div class="div"></div>
-      <button class="ico on" title="쌤 와이드"><svg><use href="#i-fs"/></svg></button>
+      <button class="ico on" title="쌤 와이드"><svg><use href="#i-cam"/></svg></button>
       <button class="ico on" title="가로"><svg><use href="#i-garo"/></svg></button>
       <button class="ico" title="세로"><svg><use href="#i-sero"/></svg></button>
       <button class="ico lock" title="PiP(앱 전용)"><svg><use href="#i-pip"/></svg></button>
@@ -133,7 +133,7 @@
   <div><span class="k"><svg><use href="#i-flip"/></svg></span> 좌우반전</div>
   <div><span class="k"><svg><use href="#i-swap"/></svg></span> 영상 교체</div>
   <div><span class="k"><svg><use href="#i-zoom"/></svg></span> 학생영상 줌(꽉 채움)</div>
-  <div><span class="k"><svg><use href="#i-fs"/></svg></span> 쌤 카메라 와이드/줌</div>
+  <div><span class="k"><svg><use href="#i-cam"/></svg></span> 쌤 카메라 와이드/줌</div>
   <div><span class="k"><svg><use href="#i-garo"/></svg></span> 가로 배치</div>
   <div><span class="k"><svg><use href="#i-sero"/></svg></span> 세로 배치</div>
   <div><span class="k"><svg><use href="#i-pip"/></svg></span> PiP(앱 전용, 잠금)</div>
