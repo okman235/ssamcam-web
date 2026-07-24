@@ -1,0 +1,145 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root{--dark:#0F1614;--dock:rgba(22,33,29,.92);--bd:#2E413B;--lit:#4FD1A0;--amber:#F2A81D;--teal:#1D6A5A;--red:#E24C3F;--txt:#E9EFEC;--muted:#8CA098}
+  *{box-sizing:border-box}
+  body{margin:0;background:#0a0f0d;color:var(--txt);font-family:'Pretendard',-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;padding:24px}
+  h2{font-size:14px;color:var(--muted);font-weight:700;margin:24px 0 10px;letter-spacing:.02em}
+  .wrap{max-width:1100px;margin:0 auto}
+  .lead{background:#12201c;border:1px solid var(--bd);border-radius:12px;padding:14px 16px;font-size:13px;line-height:1.7;color:#C7D2CC}
+  .lead b{color:var(--lit)}
+  /* 아이콘 버튼 */
+  .ico{width:40px;height:40px;border-radius:20px;background:rgba(38,52,47,.94);border:2px solid rgba(255,255,255,.16);color:var(--txt);
+       display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:0 0 auto}
+  .ico.on{border-color:var(--lit);color:var(--lit)}
+  .ico.lock{color:var(--muted)}
+  .ico svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .div{width:1px;height:24px;background:var(--bd);margin:0 4px;flex:0 0 auto}
+  /* 도크 */
+  .dock{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--dock);border:1px solid var(--bd);
+        box-shadow:0 10px 30px rgba(0,0,0,.45);backdrop-filter:blur(6px)}
+  .rec{width:60px;height:60px;border-radius:30px;background:var(--red);border:4px solid #fff;box-shadow:0 0 0 3px rgba(226,76,63,.35);flex:0 0 auto;cursor:pointer}
+  .meter{width:90px;height:8px;border-radius:4px;background:linear-gradient(90deg,var(--lit),#2f6f5e 60%,#24493d);opacity:.8}
+  .meter.r{background:linear-gradient(270deg,var(--lit),#2f6f5e 60%,#24493d)}
+  .mlbl{font-size:10px;color:var(--muted);text-align:center;margin-top:3px}
+  /* 프레임 */
+  .frame{position:relative;background:#000;border-radius:12px;overflow:hidden;margin:0 auto}
+  .vid{position:absolute;background:#1a2b2f;display:flex;align-items:center;justify-content:center;color:#3a5257;font-size:12px}
+  .tag{position:absolute;left:10px;bottom:8px;font-weight:800;font-size:14px;color:#fff;opacity:.9}
+  /* 학생 재생 스트립 (최소, 한 줄) */
+  .strip{position:absolute;left:10px;right:10px;display:flex;align-items:center;gap:7px}
+  .wedge{width:38px;height:16px;flex:0 0 auto;cursor:pointer}
+  .play{width:22px;height:22px;flex:0 0 auto;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.7));cursor:pointer}
+  .seek{position:relative;flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.32)}
+  .seek::after{content:'';position:absolute;left:0;top:0;height:4px;width:22%;border-radius:2px;background:var(--amber)}
+  .seek .thumb{position:absolute;left:22%;top:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:6px;background:var(--amber);border:2px solid #fff}
+  .time{font-size:11px;color:#dde;flex:0 0 auto;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+  /* 코너 미니 버튼(뒤로) */
+  .corner{position:absolute;top:12px;left:12px;width:36px;height:36px;border-radius:18px;background:rgba(38,52,47,.94);border:1px solid rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;color:var(--txt);font-size:20px}
+  /* 범례 */
+  .legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px 16px;margin-top:12px;font-size:12px;color:#C7D2CC}
+  .legend div{display:flex;align-items:center;gap:8px}
+  .legend .k{width:26px;height:26px;border-radius:13px;background:rgba(38,52,47,.94);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .legend .k svg{width:15px;height:15px;fill:none;stroke:#cfe;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+</style></head>
+<body><div class="wrap">
+
+<div class="lead">
+  <b>재설계 v1 제안</b> — 컨트롤을 <b>아래 한 줄 도크</b>로 전부 모으고 아이콘화. 학생영상엔 <b>최소 재생 스트립</b>만(삼각 음량+작은 재생+짧은 탐색). 카톡보내기 삭제.<br>
+  아이콘만으론 헷갈릴 수 있어 아래 <b>범례</b>를 같이 뒀다 — 실제 앱은 아이콘만, hover 시 이름 툴팁.
+</div>
+
+<!-- 아이콘 정의(재사용) -->
+<svg style="display:none">
+  <symbol id="i-flip" viewBox="0 0 24 24"><path d="M12 4v16"/><path d="M9 8l-4 4 4 4"/><path d="M15 8l4 4-4 4"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 9h13l-3-3"/><path d="M20 15H7l3 3"/></symbol>
+  <symbol id="i-zoom" viewBox="0 0 24 24"><path d="M4 9V4h5"/><path d="M20 9V4h-5"/><path d="M4 15v5h5"/><path d="M20 15v5h-5"/></symbol>
+  <symbol id="i-garo" viewBox="0 0 24 24"><rect x="3" y="6" width="8" height="12" rx="1"/><rect x="13" y="6" width="8" height="12" rx="1"/></symbol>
+  <symbol id="i-sero" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="8" rx="1"/><rect x="6" y="13" width="12" height="8" rx="1"/></symbol>
+  <symbol id="i-pip" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><rect x="12" y="12" width="7" height="5" rx="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-input" viewBox="0 0 24 24"><path d="M4 7h16"/><circle cx="9" cy="7" r="2.2" fill="#0F1614"/><path d="M4 17h16"/><circle cx="15" cy="17" r="2.2" fill="#0F1614"/></symbol>
+  <symbol id="i-fs" viewBox="0 0 24 24"><path d="M4 9V4h5"/><path d="M20 9V4h-5"/><path d="M4 15v5h5"/><path d="M20 15v5h-5"/></symbol>
+  <symbol id="i-full" viewBox="0 0 24 24"><path d="M8 3H3v5"/><path d="M16 3h5v5"/><path d="M8 21H3v-5"/><path d="M16 21h5v-5"/></symbol>
+</svg>
+
+<h2>① 세로 (Portrait) — 도크는 캔버스 아래, 페이지 폭이라 넉넉히 한 줄</h2>
+<div class="frame" style="width:340px;height:600px">
+  <div class="corner">‹</div>
+  <div class="vid" style="left:0;top:0;width:100%;height:50%">학생 영상 (줌 켜면 꽉 채움)</div>
+  <div class="vid" style="left:0;top:50%;width:100%;height:50%;background:#22333a">쌤 카메라</div>
+  <div class="strip" style="bottom:calc(50% + 8px)">
+    <svg class="wedge" viewBox="0 0 38 16"><polygon points="0,15 38,15 38,1" fill="rgba(255,255,255,.18)"/><clipPath id="cp1"><rect x="0" y="0" width="18" height="16"/></clipPath><polygon points="0,15 38,15 38,1" fill="var(--amber)" clip-path="url(#cp1)"/></svg>
+    <div class="play">▶</div>
+    <div class="seek"><div class="thumb"></div></div>
+    <div class="time">0:00</div>
+  </div>
+  <div class="tag">SsamCam</div>
+</div>
+<div style="display:flex;justify-content:center;margin-top:14px">
+  <div class="dock">
+    <button class="ico" title="입력(카메라·마이크·헤드폰)"><svg><use href="#i-input"/></svg></button>
+    <div class="div"></div>
+    <button class="ico on" title="좌우반전"><svg><use href="#i-flip"/></svg></button>
+    <button class="ico" title="영상 교체"><svg><use href="#i-swap"/></svg></button>
+    <button class="ico" title="학생영상 줌(꽉 채움)"><svg><use href="#i-zoom"/></svg></button>
+    <div class="div"></div>
+    <div style="text-align:center"><div class="meter"></div><div class="mlbl">학생</div></div>
+    <button class="rec" title="녹화"></button>
+    <div style="text-align:center"><div class="meter r"></div><div class="mlbl">쌤</div></div>
+    <div class="div"></div>
+    <button class="ico" title="쌤 카메라 와이드/줌"><svg><use href="#i-fs"/></svg></button>
+    <button class="ico on" title="세로"><svg><use href="#i-sero"/></svg></button>
+    <button class="ico" title="가로"><svg><use href="#i-garo"/></svg></button>
+    <button class="ico lock" title="PiP(앱 전용)"><svg><use href="#i-pip"/></svg></button>
+    <button class="ico" title="전체화면"><svg><use href="#i-full"/></svg></button>
+  </div>
+</div>
+
+<h2>② 가로 (Landscape) — 도크는 하단 중앙 플로팅</h2>
+<div class="frame" style="width:900px;height:506px">
+  <div class="corner">‹</div>
+  <div class="vid" style="left:0;top:0;width:50%;height:100%">학생 영상</div>
+  <div class="vid" style="left:50%;top:0;width:50%;height:100%;background:#22333a">쌤 카메라</div>
+  <div class="strip" style="bottom:80px;left:12px;right:calc(50% + 12px)">
+    <svg class="wedge" viewBox="0 0 38 16"><polygon points="0,15 38,15 38,1" fill="rgba(255,255,255,.18)"/><clipPath id="cp2"><rect x="0" y="0" width="24" height="16"/></clipPath><polygon points="0,15 38,15 38,1" fill="var(--amber)" clip-path="url(#cp2)"/></svg>
+    <div class="play">❚❚</div>
+    <div class="seek"><div class="thumb"></div></div>
+    <div class="time">0:00</div>
+  </div>
+  <div class="tag">SsamCam</div>
+  <div style="position:absolute;left:0;right:0;bottom:16px;display:flex;justify-content:center">
+    <div class="dock">
+      <button class="ico" title="입력"><svg><use href="#i-input"/></svg></button>
+      <div class="div"></div>
+      <button class="ico" title="좌우반전"><svg><use href="#i-flip"/></svg></button>
+      <button class="ico" title="영상 교체"><svg><use href="#i-swap"/></svg></button>
+      <button class="ico" title="학생영상 줌"><svg><use href="#i-zoom"/></svg></button>
+      <div class="div"></div>
+      <div style="text-align:center"><div class="meter"></div><div class="mlbl">학생</div></div>
+      <button class="rec"></button>
+      <div style="text-align:center"><div class="meter r"></div><div class="mlbl">쌤</div></div>
+      <div class="div"></div>
+      <button class="ico on" title="쌤 와이드"><svg><use href="#i-fs"/></svg></button>
+      <button class="ico on" title="가로"><svg><use href="#i-garo"/></svg></button>
+      <button class="ico" title="세로"><svg><use href="#i-sero"/></svg></button>
+      <button class="ico lock" title="PiP(앱 전용)"><svg><use href="#i-pip"/></svg></button>
+      <button class="ico" title="전체화면"><svg><use href="#i-full"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<h2>아이콘 범례</h2>
+<div class="legend">
+  <div><span class="k"><svg><use href="#i-input"/></svg></span> 입력(카메라·마이크·헤드폰)</div>
+  <div><span class="k"><svg><use href="#i-flip"/></svg></span> 좌우반전</div>
+  <div><span class="k"><svg><use href="#i-swap"/></svg></span> 영상 교체</div>
+  <div><span class="k"><svg><use href="#i-zoom"/></svg></span> 학생영상 줌(꽉 채움)</div>
+  <div><span class="k"><svg><use href="#i-fs"/></svg></span> 쌤 카메라 와이드/줌</div>
+  <div><span class="k"><svg><use href="#i-garo"/></svg></span> 가로 배치</div>
+  <div><span class="k"><svg><use href="#i-sero"/></svg></span> 세로 배치</div>
+  <div><span class="k"><svg><use href="#i-pip"/></svg></span> PiP(앱 전용, 잠금)</div>
+  <div><span class="k"><svg><use href="#i-full"/></svg></span> 전체화면</div>
+  <div><span class="k" style="color:#fff">▶</span> 재생/일시정지 (탐색바 왼쪽)</div>
+  <div><span class="k"><svg viewBox="0 0 38 16" style="width:20px"><polygon points="2,13 34,13 34,3" fill="none" stroke="#F2A81D"/></svg></span> 삼각 음량바(왼=작게, 오=크게)</div>
+</div>
+
+</div></body></html>
