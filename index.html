@@ -3,35 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SsamCam — 학생 영상 피드백</title>
+    <title>SsamCam — 주소가 바뀌었어요</title>
     <link rel="icon" type="image/png" href="./favicon.png" />
-    <meta
-      name="description"
-      content="학생이 낸 과제 영상을 보면서 바로 피드백을 촬영해, 하나의 영상으로 저장하는 무료 웹 체험판."
-    />
-    <link
-      rel="stylesheet"
-      as="style"
-      crossorigin
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gothic+A1:wght@400;700;900&family=IBM+Plex+Mono:wght@500&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="canonical" href="https://ssamcam.higgsfield.app/" />
+    <meta name="robots" content="noindex" />
+    <!-- JS가 막힌 환경용 폴백. JS가 되면 아래 스크립트가 쿼리스트링까지 살려서 먼저 보낸다. -->
+    <meta http-equiv="refresh" content="2; url=https://ssamcam.higgsfield.app/" />
     <style>
       html, body { margin: 0; }
       body {
-        font-family: 'Pretendard Variable', Pretendard, -apple-system, 'Apple SD Gothic Neo',
-          system-ui, 'Segoe UI', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        padding: 24px;
+        box-sizing: border-box;
+        text-align: center;
+        background: #f5f2eb;
+        color: #0f5d52;
+        font-family: -apple-system, 'Apple SD Gothic Neo', system-ui, 'Segoe UI', sans-serif;
       }
-      /* 홈 노트북 오프닝 애니메이션 (1회, 루프 없음) */
-      @keyframes lidCycle { 0% { transform: scaleY(0.045); } 100% { transform: scaleY(1); } }
-      @keyframes lidShade { 0% { opacity: .96; } 100% { opacity: 0; } }
+      h1 { margin: 0; font-size: 26px; }
+      p { margin: 0; color: #4a6b64; line-height: 1.6; }
+      a.go {
+        margin-top: 8px;
+        padding: 12px 24px;
+        border-radius: 999px;
+        background: #0f5d52;
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      a.go:hover { background: #12564a; }
     </style>
-    <script type="module" crossorigin src="./assets/index-C464UtEf.js"></script>
   </head>
   <body>
-    <div id="root"></div>
+    <img src="./favicon.png" alt="" width="56" height="56" />
+    <h1>쌤캠이 이사했어요</h1>
+    <p>새 주소로 자동 이동합니다.<br />안 넘어가면 아래 버튼을 눌러주세요.</p>
+    <a class="go" href="https://ssamcam.higgsfield.app/">ssamcam.higgsfield.app 으로 가기</a>
+    <script>
+      // 유입 추적(utm_*)이 끊기지 않게 쿼리스트링을 그대로 넘긴다.
+      location.replace('https://ssamcam.higgsfield.app/' + location.search);
+    </script>
   </body>
 </html>
